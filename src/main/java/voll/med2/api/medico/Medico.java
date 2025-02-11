@@ -16,7 +16,9 @@ import voll.med2.api.endereco.EnderecoJpa;
 public class Medico {
 
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
+    private Boolean ativo;
     private String nome;
     private String email;
     private String telefone;
@@ -28,7 +30,7 @@ public class Medico {
 
 
     public Medico(DadosCadastroMedico dados) {
-
+        this.ativo = true;
         this.nome = dados.nome();
         this.email = dados.email();
         this.telefone = dados.telefone();
@@ -47,5 +49,9 @@ public class Medico {
         if (dados.endereco() != null) {
             this.enderecoJpa.atualizaEndereco(dados.endereco());
         }
+    }
+
+    public void excluir() {
+        this.ativo = false;
     }
 }

@@ -21,31 +21,35 @@ public class MedicoController {
     @PostMapping
     @Transactional
     public void cadastrar(@RequestBody @Valid DadosCadastroMedico dados) {
-            repository.save(new Medico(dados));
+        repository.save(new Medico(dados));
     }
 
     // Metodo Get
     @GetMapping
     public Page<DTOListagemMedicos> listar(Pageable paginacao) { // Paginação
-        return repository.findAll(paginacao).map(DTOListagemMedicos::new);
+        return repository.findAllByAtivoTrue(paginacao).map(DTOListagemMedicos::new);
     }
 
     // Metodo Put
     @PutMapping
     @Transactional
-    public void atualizar(@RequestBody @Valid DadosPutMedico dados){
+    public void atualizar(@RequestBody @Valid DadosPutMedico dados) {
         var medico = repository.getReferenceById(dados.id());
         medico.atualizaDados(dados);
     }
 
     // Metodo Delete exclusão total
+//    @DeleteMapping("/{id}")
+//    @Transactional
+//    public void excluir(@PathVariable Long id){
+//        repository.deleteById(id);
+
+
+    // Exclusão lógica
     @DeleteMapping("/{id}")
     @Transactional
-    public void excluir(@PathVariable Long id){
-        repository.deleteById(id);
-
+    public void exclusaoLogica(@PathVariable Long id) {
+        var medico = repository.getReferenceById(id);
+        medico.excluir();
     }
-
-
-
 }
