@@ -36,4 +36,16 @@ public class Medico {
         this.especialidade = dados.especialidade();
         this.enderecoJpa = new EnderecoJpa(dados.endereco());
     }
+
+    public void atualizaDados(DadosPutMedico dados) {
+        if (dados.nome() != null) {
+            this.nome = dados.nome();
+        }
+        if (dados.telefone() != null) {
+            this.telefone = dados.telefone();
+        }
+        if (dados.endereco() != null) {
+            this.enderecoJpa.atualizaEndereco(dados.endereco());
+        }
+    }
 }
